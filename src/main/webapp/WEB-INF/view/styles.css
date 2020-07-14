@@ -1,0 +1,40 @@
+body{
+    background: white;
+}
+nav {
+    float:right;
+}
+
+nav ul{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+nav li{
+    display: inline-block;
+    margin-right: 50px;
+    padding-top: 25px;
+}
+
+nav a{
+    color: #566991;
+}
+
+header::after{
+    content: '';
+    display: table;
+    clear:both;
+}
+header{
+    background: #2c3840;
+}
+
+#search-bar{
+  text-align: center;
+}
+
+.logo{
+    float:left;
+    width: 120px;
+    height: auto;
+}
