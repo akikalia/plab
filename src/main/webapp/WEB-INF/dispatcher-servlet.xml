@@ -12,6 +12,8 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
     <context:component-scan base-package="controller" />
 
+<!--    <mvc:resources mapping="/resources/**" location="/resources/"/>-->
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/view/</value>
