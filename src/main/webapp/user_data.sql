@@ -27,6 +27,7 @@ CREATE TABLE posts (
     data_added DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+
 DROP TABLE IF EXISTS reviews;
 -- remove table if it already exists and start from scratch
 
