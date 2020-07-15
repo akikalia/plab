@@ -23,7 +23,8 @@ DROP TABLE IF EXISTS posts;
 CREATE TABLE posts (
 	post_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     post_pic CHAR(64) NOT NULL,
-    owner_name CHAR(64) NOT NULL
+    owner_name CHAR(64) NOT NULL,
+    data_added DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 DROP TABLE IF EXISTS reviews;
