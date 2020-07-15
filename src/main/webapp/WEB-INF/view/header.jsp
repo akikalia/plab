@@ -1,6 +1,6 @@
 <header>
     <div class="navbar">
-        <img src="resources/plab_png.png" href="/" alt="logo" class="logo">
+        <img src="${pageContext.request.contextPath}/resources/logo/plab_png.png" href="/" alt="logo" class="logo">
         <jsp:include page="search-bar.jsp" />
         <nav>
             <ul>

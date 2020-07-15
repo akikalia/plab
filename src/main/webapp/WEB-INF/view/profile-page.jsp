@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="../../resources/styles.css">
+    <link rel="stylesheet" href="../../resources/css/styles.css">
     <title>plab</title>
 </head>
 

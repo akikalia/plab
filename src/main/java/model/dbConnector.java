@@ -1,9 +1,10 @@
 package main.model;
+import java.sql.*;
+
+//import com.mysql.jdbc.Connection;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import com.mysql.jdbc.Connection;
 
 public class dbConnector {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";

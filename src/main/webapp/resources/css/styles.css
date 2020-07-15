@@ -20,12 +20,13 @@ nav a{
     color: #566991;
 }
 
-header::after{
+.navbar::after{
     content: '';
     display: table;
     clear:both;
 }
-header{
+
+.navbar{
     background: #2c3840;
 }
 
