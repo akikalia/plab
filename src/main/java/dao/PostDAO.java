@@ -20,7 +20,7 @@ public class PostDAO {
 
         try {
             PreparedStatement postsListStatement = connection.prepareStatement(
-                    "select * from posts where owner_name = ? order by data_added desc"); //FIXME: typo in sql file "date" not "data"
+                    "select * from posts where owner_name = ? order by date_added desc");
             postsListStatement.setString(1, username);
             ResultSet postsListResultSet = postsListStatement.executeQuery();
             if (!postsListResultSet.next()) {
@@ -31,7 +31,7 @@ public class PostDAO {
             int postID = postsListResultSet.getInt("post_id");
             String postPictureURL = postsListResultSet.getString("post_pic");
             String posterUsername = postsListResultSet.getString("owner_name");
-            Date postDate = postsListResultSet.getDate("data_added"); //FIXME: same type as above
+            Date postDate = postsListResultSet.getDate("date_added");
             Post post = new Post(postID, postPictureURL, posterUsername, postDate);
             posts.add(post);
 
