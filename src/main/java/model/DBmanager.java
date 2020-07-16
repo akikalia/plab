@@ -1,72 +1,33 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
+
 import java.util.Set;
 
 public class DBmanager {
-	
-	public class User {
-		int user_id;
-		String username;
-		String password;
-		String pfp_url;
-	}
-	
+
 	public class Post {
 		int post_id;
-		int	user_id;
-		String post_pic_url;
-		String post_txt;
+		String owner_name;
+		String post_pic;
+		Date date_added;
 	}
 	
-	public DBmanager(){
-		Connection con = dbConnector.getConnection();
-		try {
-			Statement stmt = con.createStatement();
-			String update = "CREATE TABLE IF NOT EXISTS users" 
-				+ "(user_id int NOT NULL,"
-				+ "username varchar(255) NOT NULL UNIQUE,"
-				+ "password varchar(255) NOT NULL,"
-				+ "pfp_url varchar(255),"
-				+ "PRIMARY KEY(user_id));";
-			stmt.executeUpdate(update);
-			update = "CREATE TABLE IF NOT EXISTS posts"
-					+ "(post_id int NOT NULL,"
-					+ "user_id int NOT NULL,"
-					+ "post_pic_url,"
-					+ "post_text,"
-					+ "PRIMARY KEY(post_id));";
-			stmt.executeUpdate(update);
-			update = "CREATE TABLE IF NOT EXISTS reviews"
-					+ "(review_id NOT NULL,"
-					+ "post_id NOT NULL,"
-					+ "from_id NOT NULL,"
-					+ "to_id NOT NULL,"
-					+ "PRIMARY KEY(review_id));";
-			stmt.executeUpdate(update);
-			update = "CREATE TABLE IF NOT EXISTS follows"
-					+ "(follow_id NOT NULL,"
-					+ "from_id NOT NULL,"
-					+ "to_id NOT NULL,"
-					+ "PRIMARY KEY(follow_id));";
-			stmt.executeUpdate(update);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.err.println("Table creation error");
-		}
-	}
+	public DBmanager() {}
 	
-	public boolean nameUsed(String username) {
+	public boolean nameUsed(String user_name) {
 		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM users WHERE username =" + username;
+		String query = "SELECT * FROM users WHERE user_name = ?;";
 		try {
 			PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, user_name);
 			ResultSet rs = statement.executeQuery();
 			if(rs.next()) {
 				return true;
@@ -77,18 +38,18 @@ public class DBmanager {
 		return false;
 	}
 	
-	public User getUserById(int user_id) {
+/*
+	public User getUserById(int ) {
 		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM users WHERE user_id =" + user_id;
+		String query = "SELECT * FROM users WHERE  = ?;";
 		try {
-			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery(query);
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setInt(1, );
+			ResultSet rs = statement.executeQuery();
 			if(rs.next()) {
 				User us = new User();
-                us.user_id = (int)rs.getObject(1);
-                us.username = (String)rs.getObject(2);
-                us.password = (String)rs.getObject(3);
-                us.pfp_url = (String)rs.getObject(4);
+                us.user_name = (String)rs.getObject("user_name");
+                us.password = (String)rs.getObject("password");
 				return us;
 			} else
 				return null;
@@ -97,22 +58,18 @@ public class DBmanager {
 		}
 		return null;
 	}
-	
-	public Set<User> getUsers() {
-		Set<User> result = new HashSet<>(); 
-		Connection con = dbConnector.getConnection();
 
-        String query = "SELECT * FROM users";
-        Statement stmt;
+	public Set<User> getUsers() {
+		Set<User> result = new HashSet<>();
+		Connection con = dbConnector.getConnection();
+        String query = "SELECT * FROM users;";
 			try {
-				stmt = con.createStatement();
+				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
-	            while (rs.next()){
+	            while (rs.next()) {
 	                User us = new User();
-	                us.user_id = (int)rs.getObject(1);
-	                us.username = (String)rs.getObject(2);
-	                us.password = (String)rs.getObject(3);
-	                us.pfp_url = (String)rs.getObject(4);
+	                us.user_name = (String)rs.getObject("user_name");
+	                us.password = (String)rs.getObject("password");
 	                result.add(us);
 	            } 
 			} catch (SQLException e) {
@@ -120,38 +77,42 @@ public class DBmanager {
 			}
 		return result;
 	}
-	
-	//returns true if user was added, false if it already existed
-	public boolean addUser(String username, String password) {
-		Connection con = dbConnector.getConnection();
-        Statement stmt;
-		if(nameUsed(username))
+*/	
+	//returns true if user was added, false if name is used
+	public boolean addUser(String user_name, String password) {
+		if(nameUsed(user_name))
 			return false;
-		String update = "INSERT INTO users (username, password) VALUES (" 
-				+ username + ", " + password + ");";
+		
+		Connection con = dbConnector.getConnection();
+		String update = "INSERT INTO users (user_name, password) "
+					  + "VALUES (?, ?);";
 		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate(update);
+			PreparedStatement statement = con.prepareStatement(update);
+			statement.setString(1, user_name);
+			statement.setString(2, password);
+			statement.executeUpdate();
 			return true;
 		} catch (SQLException e) {}
+		
 		return false; 
 	}
 	
-	public Set<Post> getUsersPosts(int user_id) {
-		Set<Post> result = new HashSet<>(); 
+	public List<Post> getUsersPosts(String user_name) {
+		List<Post> result = new ArrayList<>(); 
 		Connection con = dbConnector.getConnection();
- 
-        String query = "SELECT * FROM posts WHERE user_id = " + user_id;
-        Statement stmt;
+		
+        String query = "SELECT * FROM posts WHERE owner_name = ?;";
         try {
-	        stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-	        while (rs.next()){
+	        PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, user_name);
+	        ResultSet rs = statement.executeQuery();
+	        
+			while (rs.next()){
 	            Post p = new Post();
-	            p.post_id = (int)rs.getObject(1);
-	            p.user_id = (int)rs.getObject(2);
-	            p.post_pic_url = (String)rs.getObject(3);
-	            p.post_txt = (String)rs.getObject(4);
+	            p.post_id = (int)rs.getObject("post_id");
+	            p.owner_name = user_name;
+	            p.date_added = (Date)rs.getObject("date_added");
+	            p.post_pic = (String)rs.getObject("post_pic");
 	            result.add(p);
 	        }
         } catch (SQLException e) {
@@ -162,15 +123,17 @@ public class DBmanager {
 	
 	//Returns valid rating number if the user has reviewed the post
 	//-1 otherwise
-	public int getReview (int user_id, int post_id) {
+	public int getReview (String reviewer_name, Post post) {
 		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM reviews WHERE user_id =" + user_id
-				+ " AND post_id = " + post_id;
+		String query = "SELECT * FROM reviews WHERE reviewer_name = ? "
+				+ "AND post_id = ?;";
 		try {
 			PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, reviewer_name);
+			statement.setInt(2, post.post_id);			
 			ResultSet rs = statement.executeQuery();
 			if(rs.next()) {
-				return (int)rs.getObject(2);
+				return (int)rs.getObject("rating");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,136 +143,118 @@ public class DBmanager {
 	
 	//Returns true if rated successfully
 	//false if review already exists
-	public boolean setReview (int user_id, int rating, int post_id, int to_id) {
+	public boolean setReview (String reviewer_name, Post post, int rating) {
 		Connection con = dbConnector.getConnection();
-        try {
-	        if(getReview(user_id, post_id) == -1) {
-	        	String update = "INSERT INTO reviews "
-	        			+ "(rating, post_id, from_id, to_id) "
-	        			+ "VALUES (?, ?, ?, ?);";
+		if(getReview(reviewer_name, post) == -1) {
+			String update = "INSERT INTO reviews (rating, post_id, "
+					+ "reviewer_name) VALUES (?, ?, ?);";
+			try {
 	    	    PreparedStatement stmt = con.prepareStatement(update);
 	    	    stmt.setInt(1, rating);
-	    	    stmt.setInt(2, post_id);
-	    	    stmt.setInt(3, user_id);
-	    	    stmt.setInt(4, to_id);	    	    
+	    	    stmt.setInt(2, post.post_id);
+	    	    stmt.setString(3, reviewer_name);    	    
 	    	    stmt.executeUpdate();
 	        	return true;
-	        } else {
-	        	/* uncomment this if a user can review a post
-	        	 * more then once
-	        	String update = "UPDATE reviews "
-	        			+ "SET rating = " + rating
-	        			+ "WHERE from_id = " + user_id
-	        			+ " AND post_id = " + post_id + ";"; 
-	        	stmt.executeUpdate(update);
-	        	*/
-	        	return false;
-	        }
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+        }
 		return false;
 	}
 	
-	//returns 0 if no one has rated yet
+private static final int DEF_RATING = 0;
 	public int getPostAvgReview(int post_id) {
 		Connection con = dbConnector.getConnection();
-	    Statement stmt;
+		String query = "SELECT avg(rating) FROM reviews WHERE post_id = ?;";
         try {
-	        stmt = con.createStatement();
-	        String query = "SELECT avg"
-	        		+ "(rating) FROM reviews WHERE post_id = "
-	        		+ post_id + ";";
-	        ResultSet rs = stmt.executeQuery(query);
-	        if(rs.next()) {
-	        	if(rs.wasNull())
-	        		return 0;
-	        	else
-	        		return (int)rs.getObject(1);
-	        }
+        	PreparedStatement statement = con.prepareStatement(query);
+        	statement.setInt(1, post_id);
+	        ResultSet rs = statement.executeQuery();
+	        rs.next();
+        	if(rs.wasNull())
+        		return DEF_RATING;
+        	else
+        		return (int)rs.getObject(1);
+        	
         } catch (SQLException e) {
         	e.printStackTrace();
         }
 		return 0;
 	}
 
-	//returns 0 if no one has rated yet
-	public int getUserAvgReview(int user_id) {
+	public int getUserAvgReview(String user_name) {
 		Connection con = dbConnector.getConnection();
-	    Statement stmt;
+		String query = "SELECT avg(rating) FROM reviews WHERE owner_name = ?;";
         try {
-	        stmt = con.createStatement();
-	        String query = 
-	        		"SELECT avg(rating) FROM reviews WHERE user_id = "+ user_id;
-	        ResultSet rs = stmt.executeQuery(query);
-	        if(rs.next()) {
-	        	if(rs.wasNull())
-	        		return 0;
-	        	else
-	        		return (int)rs.getObject(1);
-	        }
-        } catch (SQLException e) {}
+        	PreparedStatement statement = con.prepareStatement(query);
+        	statement.setString(1, user_name);
+	        ResultSet rs = statement.executeQuery();
+	        rs.next();
+        	if(rs.wasNull())
+        		return DEF_RATING;
+        	else
+        		return (int)rs.getObject(1);
+        	
+        } catch (SQLException e) {
+        	e.printStackTrace();
+        }
 		return 0;
 	}
 	
-	public void addPost(int user_id, String pic_url) {
+	public void addPost(String user_name, String pic_url) {
 		Connection con = dbConnector.getConnection();
-        Statement stmt;
-		String update = "INSERT INTO posts (user_id, post_pic_url) VALUES (" 
-				+ user_id + ", " + pic_url + ");";
+		String update = "INSERT INTO posts (owner_name, post_pic) VALUES (?, ?);";
 		try {
-			stmt = con.createStatement();
-			stmt.executeUpdate(update);
+			PreparedStatement statement = con.prepareStatement(update);
+			statement.setString(1, user_name);
+			statement.setString(2, pic_url);
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	//returns all the users that the given one follows
-	public Set<User> getFollowings(int user_id) {
-		Set<User> result = new HashSet<User>();
+	//returns all the usernames that the given one follows
+	public Set<String> getFollowings(String user_name) {
+		Set<String> result = new HashSet<String>();
 		Connection con = dbConnector.getConnection();
-		String q = "SELECT * from users WHERE user_id "
-			+ "IN (SELECT to_id FROM follows WHERE from_id = ?);";
+		String q = "SELECT * from users WHERE user_name"
+			+ "IN (SELECT followee_name FROM follows WHERE follower_name = ?);";
         try {
         	PreparedStatement statement = con.prepareStatement(q);
-			statement.setString(1, ""+user_id);
+			statement.setString(1, user_name);
 			ResultSet rs = statement.executeQuery();
 			while(rs.next()) {
-				User us = new User();
-				us.user_id = (int)rs.getObject(1);
-                us.username = (String)rs.getObject(2);
-                us.password = (String)rs.getObject(3);
-                us.pfp_url = (String)rs.getObject(4);
-                result.add(us);
+				String name = (String)rs.getObject("user_name");
+                result.add(name);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();}
 		return null;
 	}
 	
-	public Set<Post> getFeedPosts(int user_id) {
-		Set<Post> result = new HashSet<>();
-		Set<User> followings = getFollowings(user_id);
-		for(User f : followings) {
-			result.addAll(getUsersPosts(f.user_id));
+	public List<Post> getFeedPosts(String user_name) {
+		List<Post> result = new ArrayList<>();
+		Set<String> followings = getFollowings(user_name);
+		for(String followee_name : followings) {
+			result.addAll(getUsersPosts(followee_name));
 		}
 		return result;
 	}
-	
-	public User getUser(String username, String password) {
+/*	
+	public User getUser(String user_name, String password) {
 		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM users WHERE username =" + username
-						+ " AND password = " + password + ";";
+		String query = "SELECT * FROM users "
+					 + "WHERE user_name = ? AND password = ?;";
 		try {
-			Statement statement = con.createStatement();
-			ResultSet rs = statement.executeQuery(query);
+			PreparedStatement statement = con.prepareStatement(query);
+			statement.setString(1, user_name);
+			statement.setString(2, password);
+			ResultSet rs = statement.executeQuery();
 			if(rs.next()) {
 				User us = new User();
-                us.user_id = (int)rs.getObject(1);
-                us.username = (String)rs.getObject(2);
+                us.user_name = (String)rs.getObject(2);
                 us.password = (String)rs.getObject(3);
-                us.pfp_url = (String)rs.getObject(4);
 				return us;
 			} else
 				return null;
@@ -318,4 +263,6 @@ public class DBmanager {
 		}
 		return null;
 	}
+}
+*/
 }
