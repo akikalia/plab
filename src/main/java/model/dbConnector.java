@@ -1,4 +1,4 @@
-package main.model;
+package model;
 import java.sql.*;
 
 //import com.mysql.jdbc.Connection;

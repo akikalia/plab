@@ -1,6 +1,6 @@
-package main.model;
+package model;
 
-import main.model.AccountManager;
+import model.AccountManager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;

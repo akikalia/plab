@@ -8,7 +8,7 @@
 <body>
     <jsp:include page="header-w-search.jsp" />
     <main>
-        <jsp:include page="profile-list.jsp" />
+        <jsp:include page="post-list.jsp" />
     </main>
     <jsp:include page="footer.jsp" />
 </body>

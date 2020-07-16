@@ -27,6 +27,8 @@ nav a{
 }
 
 .navbar{
+    margin:0;
+    padding:0;
     background: #2c3840;
 }
 
@@ -38,4 +40,13 @@ nav a{
     float:left;
     width: 120px;
     height: auto;
+}
+.icon{
+    width:40px;
+    height:auto;
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
