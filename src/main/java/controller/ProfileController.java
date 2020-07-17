@@ -21,7 +21,7 @@ public class ProfileController {
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
         //arr = db.search()
-        //pass arr to search.jsp
+        //pass arr to search.jsp (or just do db.search() in search.jsp...)
         return "";
     }
 
@@ -47,8 +47,9 @@ public class ProfileController {
                       @RequestParam String username){
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
-        //profile p = db.getProfile();
+        //profile p = db.getProfile(username);
         //pass profile to profile.jsp
+        //(or just do db.getProfile(username) in profile.jsp...)
         return "profile";
     }
 
