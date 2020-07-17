@@ -1,5 +1,7 @@
 package model;
 
+import dao.DBmanager;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -10,10 +12,10 @@ public class Profile {
     private final int numFollowers;
     private final int numFollowing;
     private final int numReviews;
-    private final List<Post> posts;
+    private final List<DBmanager.Post> posts;
 
     public Profile(String username, String profilePictureURL, BigDecimal rating,
-                   int numFollowers, int numFollowing, int numReviews, List<Post> posts) {
+                   int numFollowers, int numFollowing, int numReviews, List<DBmanager.Post> posts) {
         this.username = username;
         this.profilePictureURL = profilePictureURL;
         this.rating = rating;
@@ -47,7 +49,7 @@ public class Profile {
         return numReviews;
     }
 
-    public List<Post> getPosts() {
+    public List<DBmanager.Post> getPosts() {
         return posts;
     }
 }
