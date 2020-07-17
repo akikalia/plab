@@ -57,7 +57,7 @@ nav a{
     height:auto;
 }
 footer {
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
     width: 100%;
 }
@@ -86,15 +86,7 @@ footer {
     padding: 10px;
 }
 
-.profile * {
-    text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-
-}
-
-.post * {
+.profile *, .post * {
     text-align: center;
     display: block;
     margin-left: auto;
@@ -103,7 +95,7 @@ footer {
 }
 
 
-.post  {
+.post , .profile_pic_a {
     margin: auto;
     width: 400px;
     border: 5px #2c3841;
@@ -111,13 +103,6 @@ footer {
     padding: 10px;
 }
 
-.profile_pic_a{
-    margin: auto;
-    width: 400px;
-    border: 5px #2c3841;
-    border-radius: 4%;
-    padding: 10px;
-}
 
 
 main  {
@@ -135,4 +120,9 @@ main button{
     border: 5px #2c3841;
     border-radius: 4%;
     padding: 10px;
+}
+
+.post{
+    background: rgba(133, 145, 175, 0.08);
+    margin-bottom: 50px;
 }
