@@ -1,28 +1,34 @@
 package controller;
 
-import model.DBmanager;
+import dao.DBmanager;
+import model.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class ProfileController {
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    String search(HttpServletRequest req,
+    ModelAndView search(HttpServletRequest req,
                   HttpServletResponse resp,
                   HttpSession ses,
-                  @RequestParam String search){
+                  @RequestParam String q){
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
-        //arr = db.search()
-        //pass arr to search.jsp (or just do db.search() in search.jsp...)
-        return "";
+        List<String> arr = db.searchProfile(q);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("search-page");
+        mv.addObject("profiles", arr);
+        return mv;
     }
 
     @RequestMapping(value = "/addpost", method = RequestMethod.GET)
@@ -36,21 +42,36 @@ public class ProfileController {
                    HttpServletResponse resp,
                    HttpSession ses){
         //need to save file in resources/userData/posts
-        //add post to database and redirect to timeline-page
-        return "timeline-page";
+        //add post to database and redirect to newsfeed-page
+        return "newsfeed-page";
     }
 
+
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    String getProfile(HttpServletRequest req,
+    ModelAndView getProfile(HttpServletRequest req,
                       HttpServletResponse resp,
                       HttpSession ses,
-                      @RequestParam String username){
+                      @RequestParam String u){
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
-        //profile p = db.getProfile(username);
-        //pass profile to profile.jsp
-        //(or just do db.getProfile(username) in profile.jsp...)
-        return "profile";
+        Profile p = db.getProfile(u);
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("profile-page");
+        mv.addObject("profile", p);
+        return mv;
+    }
+
+
+    @RequestMapping(value = "/setRating", method = RequestMethod.POST)
+    void setRating(HttpServletRequest req,
+                            HttpServletResponse resp,
+                            HttpSession ses,
+                            @RequestParam int post_id,
+                           @RequestParam int rating){
+        ServletContext sc = req.getServletContext();
+        DBmanager db = (DBmanager)sc.getAttribute("db");
+        db.setReview(((String)ses.getAttribute("user")), post_id, rating);
     }
 
 }

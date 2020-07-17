@@ -1,3 +1,7 @@
+
+
+
+
 body{
     background: white;
 }
@@ -26,14 +30,21 @@ nav a{
     clear:both;
 }
 
+
 .navbar{
     margin:0;
     padding:0;
+    border:0;
     background: #2c3840;
 }
 
-#search-bar{
-  text-align: center;
+
+#search-bar {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .logo{
@@ -49,4 +60,79 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+/*post styling*/
+
+.post_img{
+    width:350px;
+    height:350px;
+    border-radius: 5%;
+    object-fit: cover;
+}
+
+.profile_pic{
+    width:120px;
+    height:120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile{
+    margin: auto;
+    width: 400px;
+    border: 5px #2c3841;
+    border-radius: 4%;
+    padding: 10px;
+}
+
+.profile * {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.post * {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+
+.post  {
+    margin: auto;
+    width: 400px;
+    border: 5px #2c3841;
+    border-radius: 4%;
+    padding: 10px;
+}
+
+.profile_pic_a{
+    margin: auto;
+    width: 400px;
+    border: 5px #2c3841;
+    border-radius: 4%;
+    padding: 10px;
+}
+
+
+main  {
+    margin: auto;
+    width: 900px;
+    border: 5px #2c3841;
+    border-radius: 4%;
+    padding: 10px;
+}
+
+main button{
+    text-align: center;
+    margin: auto;
+    width: 200px;
+    border: 5px #2c3841;
+    border-radius: 4%;
+    padding: 10px;
 }

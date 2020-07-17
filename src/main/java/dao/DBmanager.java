@@ -1,14 +1,11 @@
 package dao;
 
+import model.Post;
 import model.Profile;
 import model.dbConnector;
 
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,13 +13,6 @@ import java.util.List;
 import java.util.Set;
 
 public class DBmanager {
-
-    public class Post {
-        int post_id;
-        String owner_name;
-        String post_pic;
-        Date date_added;
-    }
 
     public DBmanager() {
     }
@@ -107,7 +97,7 @@ public class DBmanager {
         List<Post> result = new ArrayList<>();
         Connection con = dbConnector.getConnection();
 
-        String query = "SELECT * FROM posts WHERE owner_name = ?;";
+        String query = "SELECT * FROM posts WHERE owner_name = ? order by date_added desc;";
         try {
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, user_name);
@@ -115,10 +105,34 @@ public class DBmanager {
 
             while (rs.next()) {
                 Post p = new Post();
-                p.post_id = (int) rs.getObject("post_id");
-                p.owner_name = user_name;
-                p.date_added = (Date) rs.getObject("date_added");
-                p.post_pic = (String) rs.getObject("post_pic");
+                p.setPost_id((int) rs.getObject("post_id"));
+                p.setOwner_name(user_name);
+                p.setDate_added((Timestamp) rs.getObject("date_added"));
+                p.setPost_pic((String) rs.getObject("post_pic"));
+                result.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public List<Post> getFeedPosts(String user_name) {
+        List<Post> result = new ArrayList<>();
+        Connection con = dbConnector.getConnection();
+
+        String query = "Select * from posts where owner_name in (select followee_name from connections where follower_name = ?);";
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, user_name);
+            ResultSet rs = statement.executeQuery();
+
+            while (rs.next()) {
+                Post p = new Post();
+                p.setPost_id((int) rs.getObject("post_id"));
+                p.setOwner_name((String) rs.getObject("owner_name"));
+                p.setDate_added((Timestamp) rs.getObject("date_added"));
+                p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
         } catch (SQLException e) {
@@ -129,14 +143,14 @@ public class DBmanager {
 
     //Returns valid rating number if the user has reviewed the post
     //-1 otherwise
-    public int getReview(String reviewer_name, Post post) {
+    public int getReview(String reviewer_name, int post_id) {
         Connection con = dbConnector.getConnection();
         String query = "SELECT * FROM reviews WHERE reviewer_name = ? "
                 + "AND post_id = ?;";
         try {
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, reviewer_name);
-            statement.setInt(2, post.post_id);
+            statement.setInt(2, post_id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 return (int) rs.getObject("rating");
@@ -149,15 +163,15 @@ public class DBmanager {
 
     //Returns true if rated successfully
     //false if review already exists
-    public boolean setReview(String reviewer_name, Post post, int rating) {
+    public boolean setReview(String reviewer_name, int post_id, int rating) {
         Connection con = dbConnector.getConnection();
-        if (getReview(reviewer_name, post) == -1) {
+        if (getReview(reviewer_name, post_id) == -1) {
             String update = "INSERT INTO reviews (rating, post_id, "
                     + "reviewer_name) VALUES (?, ?, ?);";
             try {
                 PreparedStatement stmt = con.prepareStatement(update);
                 stmt.setInt(1, rating);
-                stmt.setInt(2, post.post_id);
+                stmt.setInt(2, post_id);
                 stmt.setString(3, reviewer_name);
                 stmt.executeUpdate();
                 return true;
@@ -239,15 +253,15 @@ public class DBmanager {
         }
         return null;
     }
-
-    public List<Post> getFeedPosts(String user_name) {
-        List<Post> result = new ArrayList<>();
-        Set<String> followings = getFollowings(user_name);
-        for (String followee_name : followings) {
-            result.addAll(getUsersPosts(followee_name));
-        }
-        return result;
-    }
+//
+//    public List<Post> getFeedPosts(String user_name) {
+//        List<Post> result = new ArrayList<>();
+//        Set<String> followings = getFollowings(user_name);
+//        for (String followee_name : followings) {
+//            result.addAll(getUsersPosts(followee_name));
+//        }
+//        return result;
+//    }
 /*	
 	public User getUser(String user_name, String password) {
 		Connection con = dbConnector.getConnection();
@@ -279,9 +293,9 @@ public class DBmanager {
      * @param searchString String put in by user, used to compare with profile usernames
      * @return <code>List</code> of profile objects; List is empty if no profile could be found
      */
-    public List<Profile> searchProfile(String searchString) {
+    public List<String> searchProfile(String searchString) {
         Connection connection = dbConnector.getConnection();
-        List<Profile> profiles = new ArrayList<>();
+        List<String> users = new ArrayList<>();
         String username;
 
         try {
@@ -289,20 +303,19 @@ public class DBmanager {
                     "select user_name from users where user_name like ?;");
             preparedStatement.setString(1, "%" + searchString + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (!resultSet.next()) {
-                preparedStatement.close();
-                return profiles;
-            }
 
-            username = resultSet.getString("user_name");
-            Profile profile = buildProfile(connection, username);
-            profiles.add(profile);
+            while(resultSet.next()) {
+                username = resultSet.getString("user_name");
+                users.add(username);
+            }
+            preparedStatement.close();
+            return users;
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        return profiles;
+        return users;
     }
 
     /**

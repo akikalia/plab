@@ -12,10 +12,10 @@ public class Profile {
     private final int numFollowers;
     private final int numFollowing;
     private final int numReviews;
-    private final List<DBmanager.Post> posts;
+    private final List<Post> posts;
 
     public Profile(String username, String profilePictureURL, BigDecimal rating,
-                   int numFollowers, int numFollowing, int numReviews, List<DBmanager.Post> posts) {
+                   int numFollowers, int numFollowing, int numReviews, List<Post> posts) {
         this.username = username;
         this.profilePictureURL = profilePictureURL;
         this.rating = rating;
@@ -49,7 +49,7 @@ public class Profile {
         return numReviews;
     }
 
-    public List<DBmanager.Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 }

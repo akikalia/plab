@@ -1,6 +1,6 @@
 package controller;
 
-import model.DBmanager;
+import dao.DBmanager;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
