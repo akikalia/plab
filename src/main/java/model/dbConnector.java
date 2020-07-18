@@ -8,10 +8,10 @@ import java.sql.SQLException;
 
 public class dbConnector {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	private static final String MYSQL_USERNAME = "";
+	private static final String MYSQL_USERNAME = "root";
     private static final String MYSQL_PASSWORD = "";
-    private static final String MYSQL_DATABASE_SERVER = "";
-    private static final String MYSQL_DATABASE_NAME = "";
+    private static final String MYSQL_DATABASE_SERVER = "localhost";
+    private static final String MYSQL_DATABASE_NAME = "plabDatabase";
 	
 	private static Connection con;
 	

@@ -1,33 +1,53 @@
 package model;
 
-import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Post {
-    private final int id;
-    private final String pictureURL;
-    private final String posterUsername;
-    private final Date postDate;
+    private int post_id;
+    private String owner_name;
+    private String post_pic;
+    private Timestamp date_added;
 
-    public Post(int id, String pictureURL, String posterUsername, Date postDate) {
-        this.id = id;
-        this.pictureURL = pictureURL;
-        this.posterUsername = posterUsername;
-        this.postDate = postDate;
+    public Post(int post_id, String owner_name, String post_pic, Timestamp date_added){
+        this.date_added = date_added;
+        this.post_pic = post_pic;
+        this.owner_name = owner_name;
+        this.post_id = post_id;
     }
 
-    public int getId() {
-        return id;
+    public Post(){
     }
 
-    public String getPictureURL() {
-        return pictureURL;
+    public Timestamp getDate_added() {
+        return date_added;
     }
 
-    public String getPosterUsername() {
-        return posterUsername;
+    public String getOwner_name() {
+        return owner_name;
     }
 
-    public Date getPostDate() {
-        return postDate;
+    public String getPost_pic() {
+        return post_pic;
+    }
+
+    public int getPost_id() {
+        return post_id;
+    }
+
+    public void setDate_added(Timestamp date_added) {
+        this.date_added = date_added;
+    }
+
+    public void setOwner_name(String owner_name) {
+        this.owner_name = owner_name;
+    }
+
+    public void setPost_id(int post_id) {
+        this.post_id = post_id;
+    }
+
+    public void setPost_pic(String post_pic) {
+        this.post_pic = post_pic;
     }
 }

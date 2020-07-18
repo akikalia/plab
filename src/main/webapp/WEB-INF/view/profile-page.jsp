@@ -1,15 +1,38 @@
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ page session = "true" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html>
-
-<head>
-    <link rel="stylesheet" href="../../resources/css/styles.css">
-    <title>plab</title>
-</head>
-
+<jsp:include page="head.jsp" />
 <body>
     <jsp:include page="header-w-search.jsp" />
-    <main>
-        <jsp:include page="profile.jsp" />
-        <jsp:include page="post.jsp" />
+    <br>
+        <div class="profile">
+            <a class="profile_pic_a" href="/profile?u=${profile.getUsername()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${profile.getUsername()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
+            <label>username: ${profile.getUsername()}</label></br>
+            <input type="checkbox"> Follow </input></br>
+            <label>followers: ${profile.getNumFollowers()}</label></br>
+            <label>following: ${profile.getNumFollowing()}</label></br>
+            <label>reviews: ${profile.getNumReviews()}</label></br>
+            <label>rating: ${profile.getRating()}</label></br>
+        </div>
+        </br>
+        <div class="posts">
+            <c:forEach var="post" items="${profile.getPosts()}">
+                <div class="post">
+                    <a class="profile_pic_a" href="/profile?username=${post.getOwner_name()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${post.getOwner_name()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
+                    <label>${post.getOwner_name()}</label></br>
+                    <img src="${pageContext.request.contextPath}/resources/userData/posts/${post.getPost_id()}.jpg" alt="post" class="post_img"></br>
+                    <form id="post-rating-form" method="post">
+                        <div class="post-rating">
+                            <input type="hidden" name="post_id" value="${post.getPost_id()}">
+                            <input type="number" name="rating" />
+                            <button type="submit" value="" >Rate</button>
+                        </div>
+                    </form>
+                </div></br>
+            </c:forEach>
+        </div>
     </main>
     <jsp:include page="footer.jsp" />
 </body>

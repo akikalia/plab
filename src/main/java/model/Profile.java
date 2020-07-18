@@ -1,5 +1,7 @@
 package model;
 
+import dao.DBmanager;
+
 import java.math.BigDecimal;
 import java.util.List;
 
