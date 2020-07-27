@@ -1,40 +1,39 @@
 
-
-
-
-body{
+body {
     background: white;
 }
+
 nav {
-    float:right;
+    float: right;
 }
 
-nav ul{
-    margin:0;
-    padding:0;
-    list-style:none;
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
-nav li{
+
+nav li {
     display: inline-block;
     margin-right: 50px;
     padding-top: 25px;
 }
 
-nav a{
+nav a {
     color: #566991;
 }
 
-.navbar::after{
+.navbar::after {
     content: '';
     display: table;
-    clear:both;
+    clear: both;
 }
 
 
-.navbar{
-    margin:0;
-    padding:0;
-    border:0;
+.navbar {
+    margin: 0;
+    padding: 0;
+    border: 0;
     background: #2c3840;
 }
 
@@ -44,18 +43,44 @@ nav a{
     display: block;
     margin-left: auto;
     margin-right: auto;
-
 }
 
-.logo{
-    float:left;
+/*
+Styling for searchbar textfield
+ */
+input[name="q"]{
+    border-radius: 5px;
+    border:inset white;
+    background:#566991;
+}
+
+/*
+Styling for placeholder text
+inside text searchbar textfield
+ */
+input[name="q"]::placeholder{
+    color:#2C3840;
+}
+
+/*
+Styling for onclick focus on
+searchbar textfield
+ */
+input[name="q"]:focus {
+    outline-width: 0;
+}
+
+.logo {
+    float: left;
     width: 120px;
     height: auto;
 }
-.icon{
-    width:40px;
-    height:auto;
+
+.icon {
+    width: 40px;
+    height: auto;
 }
+
 footer {
     /*position: absolute;*/
     bottom: 0;
@@ -64,21 +89,21 @@ footer {
 
 /*post styling*/
 
-.post_img{
-    width:350px;
-    height:350px;
+.post_img {
+    width: 350px;
+    height: 350px;
     border-radius: 5%;
     object-fit: cover;
 }
 
-.profile_pic{
-    width:120px;
-    height:120px;
+.profile_pic {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.profile{
+.profile {
     margin: auto;
     width: 400px;
     border: 5px #2c3841;
@@ -95,7 +120,7 @@ footer {
 }
 
 
-.post , .profile_pic_a {
+.post, .profile_pic_a {
     margin: auto;
     width: 400px;
     border: 5px #2c3841;
@@ -104,8 +129,7 @@ footer {
 }
 
 
-
-main  {
+main {
     margin: auto;
     width: 900px;
     border: 5px #2c3841;
@@ -113,7 +137,7 @@ main  {
     padding: 10px;
 }
 
-main button{
+main button {
     text-align: center;
     margin: auto;
     width: 200px;
@@ -122,7 +146,7 @@ main button{
     padding: 10px;
 }
 
-.post{
+.post {
     background: rgba(133, 145, 175, 0.08);
     margin-bottom: 50px;
 }
