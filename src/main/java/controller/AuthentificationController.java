@@ -2,7 +2,6 @@ package controller;
 
 import dao.DBmanager;
 import model.Post;
-import model.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,12 +60,12 @@ public class AuthentificationController {
                     HttpSession ses,
                     @RequestParam String username,
                     @RequestParam String password,
-                    @RequestParam MultipartFile profile_pic) throws IOException {
+                    @RequestParam MultipartFile profilePic) throws IOException {
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
         if (!db.nameUsed(username)){
             db.addUser(username, password);
-            saveProfilePicture(req, username, profile_pic);
+            saveProfilePicture(req, username, profilePic);
             ses.setAttribute("user",username);
         }
         resp.sendRedirect("/");
@@ -81,23 +80,23 @@ public class AuthentificationController {
     }
 
     /**
-     * Helper method. Handles saving profile picture into resources during registration.
+     * Helper method. Handles saving profile picture into resources directory during registration.
      * @param req HttpServletRequest
      * @param username Username used for registration
-     * @param profile_pic Uploaded file for profile picture
+     * @param profilePic Uploaded file for profile picture
      * @throws IOException If an I/O error occurred
      */
-    private void saveProfilePicture(HttpServletRequest req, String username, MultipartFile profile_pic) throws IOException {
+    private void saveProfilePicture(HttpServletRequest req, String username, MultipartFile profilePic) throws IOException {
         String path = req.getSession().getServletContext().getRealPath("/")  + "/resources/userData/profilePics/";
-        String filename = profile_pic.getOriginalFilename();
+        String filename = profilePic.getOriginalFilename();
         assert (filename != null);
         String extension = filename.substring(filename.lastIndexOf("."));
         File file = new File(path + username + extension);
         if (!file.exists()) {
             boolean created = file.createNewFile();
             assert (created);
+            profilePic.transferTo(file);
         }
-        profile_pic.transferTo(file);
     }
 
 }

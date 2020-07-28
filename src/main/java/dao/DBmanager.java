@@ -288,6 +288,27 @@ public class DBmanager {
     }
 
     /**
+     * Counts how many posts there are in database. Used during post picture naming.
+     *
+     * @return Number of posts in database
+     */
+    public int getPostsCount() {
+        Connection connection = dbConnector.getConnection();
+        int count = -1;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT count(*) posts_count FROM posts;");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            count = resultSet.getInt("posts_count");
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return count;
+    }
+
+    /**
      * Helper method. Given an <i>username</i> extracts necessary values from database and creates a Profile object from them
      *
      * @param connection A connection with a specific database
@@ -321,7 +342,7 @@ public class DBmanager {
         ResultSet numReviewsResultSet = numReviewsStatement.executeQuery();
         numReviewsResultSet.next();
 
-        String profilePictureURL = "path before" + username + ".extension"; //FIXME: Change to proper URL
+        String profilePictureURL = "path before" + username + ".extension"; //TODO: Not necessary anymore
         BigDecimal rating = new BigDecimal(0);
         if (ratingResultSet.next()) rating = ratingResultSet.getBigDecimal("rating");
         int numFollowers = numFollowersResultSet.getInt("num_followers");

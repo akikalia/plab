@@ -3,6 +3,6 @@
     <input type="text" placeholder="Username" name="username" required></br>
     <input type="password" placeholder="Password" name="password" required></br>
     <label for="img">Upload Profile Picture:</label>
-    <input type="file" placeholder="Profile Picture" id="img" accept="image/*" name="profile_pic" required></br>
+    <input type="file" placeholder="Profile Picture" id="img" accept=".jpg" name="profilePic" required></br>
     <button class="authbutton" type="submit">Register</button></br>
 </form>

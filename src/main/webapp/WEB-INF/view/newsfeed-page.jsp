@@ -7,7 +7,9 @@
 <body>
     <jsp:include page="header-w-search.jsp" />
     <main>
-        <button href="/addpost">Add Post</button>
+        <form method = get action = "addpost">
+            <button type="submit">Add Post</button></br>
+        </form>
         <div class="posts">
             <c:forEach var="post" items="${posts}">
                 <div class="post">
