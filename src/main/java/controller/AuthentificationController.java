@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -58,12 +60,13 @@ public class AuthentificationController {
                     HttpServletResponse resp,
                     HttpSession ses,
                     @RequestParam String username,
-                    @RequestParam String password) throws IOException {
-        //TODO: need to get profile picture and save in resources/userData/profilePics and name it username
+                    @RequestParam String password,
+                    @RequestParam MultipartFile profile_pic) throws IOException {
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
         if (!db.nameUsed(username)){
             db.addUser(username, password);
+            saveProfilePicture(req, username, profile_pic);
             ses.setAttribute("user",username);
         }
         resp.sendRedirect("/");
@@ -75,6 +78,26 @@ public class AuthentificationController {
                   HttpSession ses) throws IOException {
         ses.invalidate();
         resp.sendRedirect("/");
+    }
+
+    /**
+     * Helper method. Handles saving profile picture into resources during registration.
+     * @param req HttpServletRequest
+     * @param username Username used for registration
+     * @param profile_pic Uploaded file for profile picture
+     * @throws IOException If an I/O error occurred
+     */
+    private void saveProfilePicture(HttpServletRequest req, String username, MultipartFile profile_pic) throws IOException {
+        String path = req.getSession().getServletContext().getRealPath("/")  + "/resources/userData/profilePics/";
+        String filename = profile_pic.getOriginalFilename();
+        assert (filename != null);
+        String extension = filename.substring(filename.lastIndexOf("."));
+        File file = new File(path + username + extension);
+        if (!file.exists()) {
+            boolean created = file.createNewFile();
+            assert (created);
+        }
+        profile_pic.transferTo(file);
     }
 
 }

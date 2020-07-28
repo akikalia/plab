@@ -1,4 +1,4 @@
-<form class="auth" action="register" method="post">
+<form class="auth" action="register" method="post" enctype="multipart/form-data">
     <label>Register</label></br>
     <input type="text" placeholder="Username" name="username" required></br>
     <input type="password" placeholder="Password" name="password" required></br>
