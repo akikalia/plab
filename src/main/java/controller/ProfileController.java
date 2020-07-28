@@ -12,6 +12,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 
 @Controller
@@ -68,10 +70,35 @@ public class ProfileController {
                             HttpServletResponse resp,
                             HttpSession ses,
                             @RequestParam int post_id,
-                           @RequestParam int rating){
+                            @RequestParam int rating){
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager)sc.getAttribute("db");
         db.setReview(((String)ses.getAttribute("user")), post_id, rating);
     }
 
+    @RequestMapping(value = "/cbChanged", method = RequestMethod.POST)
+    void connChanged(HttpServletRequest req, HttpServletResponse resp, @RequestParam String u, @RequestParam String logged_in) {
+        Enumeration<String> en = req.getParameterNames();
+        ServletContext sc = req.getServletContext();
+        DBmanager db = (DBmanager)sc.getAttribute("db");
+        while(en.hasMoreElements()) {
+            String pn = en.nextElement();
+            if(pn.equals("cb")) { // checkbox was passed = checkbox got checked
+                db.addConnection(logged_in, u);
+                try {
+                    resp.sendRedirect("profile?u="+u);
+                    return;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        // checkbox was not passed = checkbox got unchecked
+        db.removeConnection(logged_in, u);
+        try {
+            resp.sendRedirect("profile?u="+u);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

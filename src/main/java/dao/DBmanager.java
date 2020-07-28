@@ -33,46 +33,6 @@ public class DBmanager {
         return false;
     }
 
-    /*
-        public User getUserById(int ) {
-            Connection con = dbConnector.getConnection();
-            String query = "SELECT * FROM users WHERE  = ?;";
-            try {
-                PreparedStatement statement = con.prepareStatement(query);
-                statement.setInt(1, );
-                ResultSet rs = statement.executeQuery();
-                if(rs.next()) {
-                    User us = new User();
-                    us.user_name = (String)rs.getObject("user_name");
-                    us.password = (String)rs.getObject("password");
-                    return us;
-                } else
-                    return null;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        public Set<User> getUsers() {
-            Set<User> result = new HashSet<>();
-            Connection con = dbConnector.getConnection();
-            String query = "SELECT * FROM users;";
-                try {
-                    Statement stmt = con.createStatement();
-                    ResultSet rs = stmt.executeQuery(query);
-                    while (rs.next()) {
-                        User us = new User();
-                        us.user_name = (String)rs.getObject("user_name");
-                        us.password = (String)rs.getObject("password");
-                        result.add(us);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            return result;
-        }
-    */
     //returns true if user was added, false if name is used
     public boolean addUser(String user_name, String password) {
         if (nameUsed(user_name))
@@ -182,46 +142,6 @@ public class DBmanager {
         return false;
     }
 
-    private static final int DEF_RATING = 0;
-
-    public int getPostAvgReview(int post_id) {
-        Connection con = dbConnector.getConnection();
-        String query = "SELECT avg(rating) FROM reviews WHERE post_id = ?;";
-        try {
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setInt(1, post_id);
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            if (rs.wasNull())
-                return DEF_RATING;
-            else
-                return (int) rs.getObject(1);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public int getUserAvgReview(String user_name) {
-        Connection con = dbConnector.getConnection();
-        String query = "SELECT avg(rating) FROM reviews WHERE owner_name = ?;";
-        try {
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, user_name);
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            if (rs.wasNull())
-                return DEF_RATING;
-            else
-                return (int) rs.getObject(1);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
     public void addPost(String user_name, String pic_url) {
         Connection con = dbConnector.getConnection();
         String update = "INSERT INTO posts (owner_name, post_pic) VALUES (?, ?);";
@@ -239,53 +159,46 @@ public class DBmanager {
     public Set<String> getFollowings(String user_name) {
         Set<String> result = new HashSet<String>();
         Connection con = dbConnector.getConnection();
-        String q = "SELECT * from users WHERE user_name IN (SELECT followee_name FROM follows WHERE follower_name = ?);";
+        String q = "SELECT followee_name FROM connections WHERE follower_name = ?;";
         try {
             PreparedStatement statement = con.prepareStatement(q);
             statement.setString(1, user_name);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                String name = (String) rs.getObject("user_name");
+                String name = (String) rs.getObject(1);
                 result.add(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
-//
-//    public List<Post> getFeedPosts(String user_name) {
-//        List<Post> result = new ArrayList<>();
-//        Set<String> followings = getFollowings(user_name);
-//        for (String followee_name : followings) {
-//            result.addAll(getUsersPosts(followee_name));
-//        }
-//        return result;
-//    }
-/*	
-	public User getUser(String user_name, String password) {
-		Connection con = dbConnector.getConnection();
-		String query = "SELECT * FROM users "
-					 + "WHERE user_name = ? AND password = ?;";
-		try {
-			PreparedStatement statement = con.prepareStatement(query);
-			statement.setString(1, user_name);
-			statement.setString(2, password);
-			ResultSet rs = statement.executeQuery();
-			if(rs.next()) {
-				User us = new User();
-                us.user_name = (String)rs.getObject(2);
-                us.password = (String)rs.getObject(3);
-				return us;
-			} else
-				return null;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-}
-*/
+
+    public void addConnection(String follower, String followee) {
+        Connection con = dbConnector.getConnection();
+        String q = "INSERT INTO connections (follower_name, followee_name) VALUES (?, ?);";
+        try {
+            PreparedStatement statement = con.prepareStatement(q);
+            statement.setString(1, follower);
+            statement.setString(2, followee);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeConnection(String follower, String followee) {
+        Connection con = dbConnector.getConnection();
+        String q = "DELETE FROM connections WHERE follower_name = ? AND followee_name = ?;";
+        try {
+            PreparedStatement statement = con.prepareStatement(q);
+            statement.setString(1, follower);
+            statement.setString(2, followee);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Given a <i>searchString</i> looks for profiles, usernames of which contain that string and returns them as a List.
