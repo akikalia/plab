@@ -38,13 +38,13 @@
                     <input type="hidden" name="logged_in" value=${user}>
                     <c:choose>
                         <c:when test="${flag == 'yes'}">
-                            following
+                            <label for="follow-cb">Following</label>
                         </c:when>
                         <c:otherwise>
-                            follow
+                            <label for="follow-cb">Follow</label>
                         </c:otherwise>
                     </c:choose>
-                    <input type="checkbox" name="cb" <c:if test = "${flag == 'yes'}">checked</c:if> onChange="this.form.submit()">
+                    <input type="checkbox" name="cb" id="follow-cb" <c:if test = "${flag == 'yes'}">checked</c:if> onChange="this.form.submit()">
                 </form>
             </c:if>
             <label>followers: ${profile.getNumFollowers()}</label></br>

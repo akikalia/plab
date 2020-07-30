@@ -48,18 +48,18 @@ nav a {
 /*
 Styling for searchbar textfield
  */
-input[name="q"]{
+input[name="q"] {
     border-radius: 5px;
-    border:inset white;
-    background:#566991;
+    border: inset white;
+    background: #566991;
 }
 
 /*
 Styling for placeholder text
 inside searchbar textfield
  */
-input[name="q"]::placeholder{
-    color:#2C3840;
+input[name="q"]::placeholder {
+    color: #2c3840;
 }
 
 /*
@@ -68,6 +68,38 @@ searchbar textfield
  */
 input[name="q"]:focus {
     outline-width: 0;
+}
+
+
+/*
+Styling for follow button,
+hiding checkbox
+ */
+input[name="cb"] {
+    visibility: hidden;
+}
+
+/*
+Styling for follow button,
+turning checkbox into button
+ */
+label[for="follow-cb"] {
+    width: 90px;
+    height: 25px;
+    background: white;
+    border: outset #566991;
+    border-radius: 15px;
+    user-select: none;
+    line-height: 130%;
+}
+
+/*
+Styling for follow button,
+insets when clicked
+ */
+label[for="follow-cb"]:active {
+    background: #f5f5f5;
+    border: inset #566991;
 }
 
 .logo {
