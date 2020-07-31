@@ -85,7 +85,13 @@ public class ProfileController {
             resp.sendRedirect(req.getParameter("page"));
             return ;
         }
-        db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
+        int review = db.getReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id));
+        if (review < 0){
+            db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
+        } else {
+            db.removeReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id));
+            db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
+        }
         resp.sendRedirect(req.getParameter("page"));
     }
 

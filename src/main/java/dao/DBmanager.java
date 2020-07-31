@@ -146,6 +146,25 @@ public class DBmanager {
         return false;
     }
 
+    //Returns true if rated successfully
+    //false if review already exists
+    public boolean removeReview(String reviewer_name, int post_id) {
+        Connection con = dbConnector.getConnection();
+        if (getReview(reviewer_name, post_id) == -1) {
+            String update = "DELETE FROM reviews WHERE ? = reviewer_name and post_id = ?;";
+            try {
+                PreparedStatement stmt = con.prepareStatement(update);
+                stmt.setString(1, reviewer_name);
+                stmt.setInt(2, post_id);
+                stmt.executeUpdate();
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     public void addPost(String user_name, String pic_url) {
         Connection con = dbConnector.getConnection();
         String update = "INSERT INTO posts (owner_name, post_pic) VALUES (?, ?);";
