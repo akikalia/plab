@@ -55,14 +55,24 @@ nav a {
     margin-right: 50%;
 }
 
+
 /*
 Styling for searchbar textfield
  */
 input[name="q"] {
-    border-radius: 5px;
-    border: inset white;
-    background: #566991;
+    border-radius: 6px;
+    border: inset #566991;
+    background: white;
 }
+
+/*!**/
+/*Styling for searchbar textfield*/
+/* *!*/
+/*input[name="q"] {*/
+/*    border-radius: 5px;*/
+/*    border: inset white;*/
+/*    background: #566991;*/
+/*}*/
 
 /*
 Styling for placeholder text
