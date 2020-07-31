@@ -4,7 +4,6 @@ import model.Post;
 import model.Profile;
 import model.dbConnector;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -68,8 +67,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name(user_name);
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                BigDecimal temp = ((BigDecimal) rs.getObject("post_rating"));
-                p.setPost_rating(temp == null ? 0 : temp.doubleValue());
+                Double temp = ((Double) rs.getObject("post_rating"));
+                p.setPost_rating(temp == null ? 0 : temp);
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -94,8 +93,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name((String) rs.getObject("owner_name"));
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                BigDecimal temp = ((BigDecimal) rs.getObject("post_rating"));
-                p.setPost_rating(temp == null ? 0 : temp.doubleValue());
+                Double temp = ((Double) rs.getObject("post_rating"));
+                p.setPost_rating(temp == null ? 0 : temp);
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -117,7 +116,7 @@ public class DBmanager {
             statement.setInt(2, post_id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return (int) rs.getObject("rating");
+                return ((Double) rs.getObject("rating")).intValue();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -367,8 +366,8 @@ public class DBmanager {
         numReviewsResultSet.next();
 
         String profilePictureURL = "path before" + username + ".extension"; //TODO: Not necessary anymore
-        BigDecimal rating = new BigDecimal(0);
-        if (ratingResultSet.next()) rating = ratingResultSet.getBigDecimal("rating");
+        Double rating = (double) 0;
+        if (ratingResultSet.next()) rating = ratingResultSet.getDouble("rating");
         int numFollowers = numFollowersResultSet.getInt("num_followers");
         int numFollowing = numFollowingResultSet.getInt("num_following");
         int numReviews = numReviewsResultSet.getInt("num_reviews");
