@@ -83,7 +83,7 @@ public class DBmanager {
         List<Post> result = new ArrayList<>();
         Connection con = dbConnector.getConnection();
 
-        String query = "Select *,(select avg(rating) from reviews r where r.post_id = p.post_id) post_rating from posts p where owner_name in (select followee_name from connections where follower_name = ?);";
+        String query = "Select *,(select avg(rating) from reviews r where r.post_id = p.post_id) post_rating from posts p where owner_name in (select followee_name from connections where follower_name = ?) order by date_added desc;";
         try {
             PreparedStatement statement = con.prepareStatement(query);
             statement.setString(1, user_name);

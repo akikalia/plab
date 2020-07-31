@@ -88,7 +88,7 @@ public class ProfileController {
         int review = db.getReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id));
         if (review < 0){
             db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
-        } else {
+        } else if(review != rating_){
             db.removeReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id));
             db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
         }
