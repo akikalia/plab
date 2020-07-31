@@ -15,10 +15,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+
+
 
 @Controller
 public class AuthentificationController {
+
+    HashMap<Integer, Integer> getUserRating(List<Post> posts, DBmanager db, String user){
+        HashMap<Integer, Integer> userRatings = new HashMap<Integer, Integer>();
+        for (int i = 0; i< posts.size();i++){
+            userRatings.put(posts.get(i).getPost_id(),db.getReview(user, posts.get(i).getPost_id()));
+        }
+        return userRatings;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView mainPage(HttpServletRequest req,
@@ -34,6 +45,7 @@ public class AuthentificationController {
             DBmanager db = (DBmanager) sc.getAttribute("db");
             List<Post> posts = db.getFeedPosts(user);
             mv.addObject("posts", posts);
+            mv.addObject("userRatings", getUserRating(posts, db, user));
         }
         return mv;
     }

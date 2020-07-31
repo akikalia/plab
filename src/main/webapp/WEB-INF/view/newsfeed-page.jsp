@@ -21,7 +21,7 @@
                         <input class='rating-input' type="hidden" name="rating" >
                         <input type="hidden" name="post_id" value="${post.getPost_id()}">
                         <input type="hidden" name="page" value="/">
-                        <div class="stars"  data-rating="${post.getPost_rating()}">
+                        <div class="stars"  data-rating="${post.getPost_rating()}" user-rating="${userRatings.getOrDefault(post.getPost_id(), -1)}">
                             <img style="width:55px; height:auto;" val="1" class="star" src="${pageContext.request.contextPath}/resources/icons/empty_star.png">
                             <img style="width:55px; height:auto;" val="2" class="star" src="${pageContext.request.contextPath}/resources/icons/empty_star.png">
                             <img style="width:55px; height:auto;" val="3" class="star" src="${pageContext.request.contextPath}/resources/icons/empty_star.png">

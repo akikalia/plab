@@ -1,6 +1,7 @@
 package controller;
 
 import dao.DBmanager;
+import model.Post;
 import model.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +17,18 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
 public class ProfileController {
+    HashMap<Integer, Integer> getUserRating(List<Post> posts, DBmanager db, String user){
+        HashMap<Integer, Integer> userRatings = new HashMap<Integer, Integer>();
+        for (int i = 0; i< posts.size();i++){
+            userRatings.put(posts.get(i).getPost_id(),db.getReview(user, posts.get(i).getPost_id()));
+        }
+        return userRatings;
+    }
     @RequestMapping(value = "/search", method = RequestMethod.GET)
     ModelAndView search(HttpServletRequest req,
                         HttpServletResponse resp,
@@ -68,6 +77,7 @@ public class ProfileController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("profile-page");
         mv.addObject("profile", p);
+        mv.addObject("userRatings", getUserRating(p.getPosts(), db, (String)ses.getAttribute("user")));
         return mv;
     }
 
