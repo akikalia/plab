@@ -1,0 +1,371 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 130023424 bytes for committing reserved memory.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_linux.cpp:2857), pid=26908, tid=26909
+#
+# JRE version:  (11.0.7+10) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.7+10-b765.53, mixed mode, sharing, tiered, compressed oops, g1 gc, linux-amd64)
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport %p %s %c %d %P %E" (or dumping to /home/alex/Desktop/projects/plab/core.26908)
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: org.jetbrains.git4idea.http.GitAskPassApp Username for 'https://github.com': 
+
+Host: Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz, 4 cores, 7G, Ubuntu 18.04.4 LTS
+Time: Fri Jul 31 04:28:43 2020 +04 elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007f00f8016000):  JavaThread "Unknown thread" [_thread_in_vm, id=26909, stack(0x00007f00fefe5000,0x00007f00ff0e6000)]
+
+Stack: [0x00007f00fefe5000,0x00007f00ff0e6000],  sp=0x00007f00ff0e4200,  free space=1020k
+Native frames: (J=compiled Java code, A=aot compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [libjvm.so+0xd6663f]  VMError::report_and_die(int, char const*, char const*, __va_list_tag*, Thread*, unsigned char*, void*, void*, char const*, int, unsigned long)+0x37f
+V  [libjvm.so+0xd6731b]  VMError::report_and_die(Thread*, char const*, int, unsigned long, VMErrorType, char const*, __va_list_tag*)+0x2b
+V  [libjvm.so+0x653295]  report_vm_out_of_memory(char const*, int, unsigned long, VMErrorType, char const*, ...)+0xc5
+V  [libjvm.so+0xb6f5c8]  os::pd_commit_memory_or_exit(char*, unsigned long, unsigned long, bool, char const*)+0xd8
+V  [libjvm.so+0xb66b3d]  os::commit_memory_or_exit(char*, unsigned long, unsigned long, bool, char const*)+0x1d
+V  [libjvm.so+0x76b6ac]  G1PageBasedVirtualSpace::commit_preferred_pages(unsigned long, unsigned long)+0x6c
+V  [libjvm.so+0x76ba8e]  G1PageBasedVirtualSpace::commit(unsigned long, unsigned long)+0x19e
+V  [libjvm.so+0x774d86]  G1RegionsLargerThanCommitSizeMapper::commit_regions(unsigned int, unsigned long, WorkGang*)+0x46
+V  [libjvm.so+0x7ec7e4]  HeapRegionManager::commit_regions(unsigned int, unsigned long, WorkGang*)+0x54
+V  [libjvm.so+0x7ed3f0]  HeapRegionManager::make_regions_available(unsigned int, unsigned int, WorkGang*)+0x30
+V  [libjvm.so+0x7ed817]  HeapRegionManager::expand_at(unsigned int, unsigned int, WorkGang*) [clone .part.24]+0xf7
+V  [libjvm.so+0x7298c0]  G1CollectedHeap::expand(unsigned long, WorkGang*, double*)+0xe0
+V  [libjvm.so+0x729fc1]  G1CollectedHeap::initialize()+0x681
+V  [libjvm.so+0xd29481]  Universe::initialize_heap()+0x41
+V  [libjvm.so+0xd29756]  universe_init()+0x46
+V  [libjvm.so+0x80c6a7]  init_globals()+0x57
+V  [libjvm.so+0xd035ca]  Threads::create_vm(JavaVMInitArgs*, bool*)+0x30a
+V  [libjvm.so+0x8b0aa1]  JNI_CreateJavaVM+0x51
+C  [libjli.so+0x3b9f]  JavaMain+0x7f
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x000055daa00d9010, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x00007f00f8040800 GCTaskThread "GC Thread#0" [stack: 0x00007f00e44e9000,0x00007f00e45e9000] [id=26910]
+  0x00007f00f8071800 ConcurrentGCThread "G1 Main Marker" [stack: 0x00007f00db5bf000,0x00007f00db6bf000] [id=26911]
+  0x00007f00f8073800 ConcurrentGCThread "G1 Conc#0" [stack: 0x00007f00db4bd000,0x00007f00db5bd000] [id=26912]
+
+[error occurred during error reporting (printing all threads), id 0xb, SIGSEGV (0xb) at pc=0x00007f00fd673040]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007f00f8012bd0] Heap_lock - owner thread: 0x00007f00f8016000
+
+Heap address: 0x0000000084a00000, size: 1974 MB, Compressed Oops mode: Non-zero based: 0x0000000084a00000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (3 events):
+Event: 0.064 Protecting memory [0x00007f00fefe5000,0x00007f00fefe9000] with protection modes 0
+Event: 0.076 Loaded shared library /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libzip.so
+Event: 0.078 Loaded shared library /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjimage.so
+
+
+Dynamic libraries:
+8c600000-100000000 ---p 00000000 00:00 0 
+55da9fc4f000-55da9fc50000 r-xp 00000000 08:02 2521109                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/bin/java
+55da9fe50000-55da9fe51000 r--p 00001000 08:02 2521109                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/bin/java
+55da9fe51000-55da9fe52000 rw-p 00002000 08:02 2521109                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/bin/java
+55daa00d5000-55daa00f6000 rw-p 00000000 00:00 0                          [heap]
+7f00cc000000-7f00cc021000 rw-p 00000000 00:00 0 
+7f00cc021000-7f00d0000000 ---p 00000000 00:00 0 
+7f00d4000000-7f00d4021000 rw-p 00000000 00:00 0 
+7f00d4021000-7f00d8000000 ---p 00000000 00:00 0 
+7f00d8d2a000-7f00db4bb000 rw-p 00000000 00:00 0 
+7f00db4bb000-7f00db4bc000 ---p 00000000 00:00 0 
+7f00db4bc000-7f00db5bd000 rw-p 00000000 00:00 0 
+7f00db5bd000-7f00db5be000 ---p 00000000 00:00 0 
+7f00db5be000-7f00db6bf000 rw-p 00000000 00:00 0 
+7f00db6bf000-7f00e0000000 ---p 00000000 00:00 0 
+7f00e0000000-7f00e0021000 rw-p 00000000 00:00 0 
+7f00e0021000-7f00e4000000 ---p 00000000 00:00 0 
+7f00e40e3000-7f00e44e7000 rw-p 00000000 00:00 0 
+7f00e44e7000-7f00e44e8000 ---p 00000000 00:00 0 
+7f00e44e8000-7f00e45ee000 rw-p 00000000 00:00 0 
+7f00e45ee000-7f00e46d4000 ---p 00000000 00:00 0 
+7f00e46d4000-7f00e4944000 rwxp 00000000 00:00 0 
+7f00e4944000-7f00e4c64000 ---p 00000000 00:00 0 
+7f00e4c64000-7f00e4ed4000 rwxp 00000000 00:00 0 
+7f00e4ed4000-7f00ec19c000 ---p 00000000 00:00 0 
+7f00ec19c000-7f00ec40c000 rwxp 00000000 00:00 0 
+7f00ec40c000-7f00f36d4000 ---p 00000000 00:00 0 
+7f00f36d4000-7f00f77ae000 r--s 00000000 08:02 2521065                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/modules
+7f00f77ae000-7f00f77c9000 r-xp 00000000 08:02 2521039                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjimage.so
+7f00f77c9000-7f00f79c9000 ---p 0001b000 08:02 2521039                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjimage.so
+7f00f79c9000-7f00f79cb000 r--p 0001b000 08:02 2521039                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjimage.so
+7f00f79cb000-7f00f79cc000 rw-p 0001d000 08:02 2521039                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjimage.so
+7f00f79cc000-7f00f79d3000 r-xp 00000000 08:02 2521064                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libzip.so
+7f00f79d3000-7f00f7bd2000 ---p 00007000 08:02 2521064                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libzip.so
+7f00f7bd2000-7f00f7bd3000 r--p 00006000 08:02 2521064                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libzip.so
+7f00f7bd3000-7f00f7bd4000 rw-p 00007000 08:02 2521064                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libzip.so
+7f00f7bd4000-7f00f7bdf000 r-xp 00000000 08:02 2110789                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f00f7bdf000-7f00f7dde000 ---p 0000b000 08:02 2110789                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f00f7dde000-7f00f7ddf000 r--p 0000a000 08:02 2110789                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f00f7ddf000-7f00f7de0000 rw-p 0000b000 08:02 2110789                    /lib/x86_64-linux-gnu/libnss_files-2.27.so
+7f00f7de0000-7f00f7de6000 rw-p 00000000 00:00 0 
+7f00f7de6000-7f00f7dfd000 r-xp 00000000 08:02 2110786                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f00f7dfd000-7f00f7ffc000 ---p 00017000 08:02 2110786                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f00f7ffc000-7f00f7ffd000 r--p 00016000 08:02 2110786                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f00f7ffd000-7f00f7ffe000 rw-p 00017000 08:02 2110786                    /lib/x86_64-linux-gnu/libnsl-2.27.so
+7f00f7ffe000-7f00f8000000 rw-p 00000000 00:00 0 
+7f00f8000000-7f00f8091000 rw-p 00000000 00:00 0 
+7f00f8091000-7f00fc000000 ---p 00000000 00:00 0 
+7f00fc04f000-7f00fc054000 rw-p 00000000 00:00 0 
+7f00fc054000-7f00fc13a000 ---p 00000000 00:00 0 
+7f00fc13a000-7f00fc145000 r-xp 00000000 08:02 2110791                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f00fc145000-7f00fc344000 ---p 0000b000 08:02 2110791                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f00fc344000-7f00fc345000 r--p 0000a000 08:02 2110791                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f00fc345000-7f00fc346000 rw-p 0000b000 08:02 2110791                    /lib/x86_64-linux-gnu/libnss_nis-2.27.so
+7f00fc346000-7f00fc34e000 r-xp 00000000 08:02 2110787                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f00fc34e000-7f00fc54e000 ---p 00008000 08:02 2110787                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f00fc54e000-7f00fc54f000 r--p 00008000 08:02 2110787                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f00fc54f000-7f00fc550000 rw-p 00009000 08:02 2110787                    /lib/x86_64-linux-gnu/libnss_compat-2.27.so
+7f00fc550000-7f00fc579000 r-xp 00000000 08:02 2521029                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjava.so
+7f00fc579000-7f00fc778000 ---p 00029000 08:02 2521029                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjava.so
+7f00fc778000-7f00fc779000 r--p 00028000 08:02 2521029                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjava.so
+7f00fc779000-7f00fc77b000 rw-p 00029000 08:02 2521029                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libjava.so
+7f00fc77b000-7f00fc788000 r-xp 00000000 08:02 2521063                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libverify.so
+7f00fc788000-7f00fc987000 ---p 0000d000 08:02 2521063                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libverify.so
+7f00fc987000-7f00fc989000 r--p 0000c000 08:02 2521063                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libverify.so
+7f00fc989000-7f00fc98a000 rw-p 0000e000 08:02 2521063                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/libverify.so
+7f00fc98a000-7f00fc991000 r-xp 00000000 08:02 2110796                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f00fc991000-7f00fcb90000 ---p 00007000 08:02 2110796                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f00fcb90000-7f00fcb91000 r--p 00006000 08:02 2110796                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f00fcb91000-7f00fcb92000 rw-p 00007000 08:02 2110796                    /lib/x86_64-linux-gnu/librt-2.27.so
+7f00fcb92000-7f00fcd2f000 r-xp 00000000 08:02 2110783                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f00fcd2f000-7f00fcf2e000 ---p 0019d000 08:02 2110783                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f00fcf2e000-7f00fcf2f000 r--p 0019c000 08:02 2110783                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f00fcf2f000-7f00fcf30000 rw-p 0019d000 08:02 2110783                    /lib/x86_64-linux-gnu/libm-2.27.so
+7f00fcf30000-7f00fdf59000 r-xp 00000000 08:02 2521088                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/server/libjvm.so
+7f00fdf59000-7f00fe159000 ---p 01029000 08:02 2521088                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/server/libjvm.so
+7f00fe159000-7f00fe218000 r--p 01029000 08:02 2521088                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/server/libjvm.so
+7f00fe218000-7f00fe252000 rw-p 010e8000 08:02 2521088                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/server/libjvm.so
+7f00fe252000-7f00fe2a8000 rw-p 00000000 00:00 0 
+7f00fe2a8000-7f00fe48f000 r-xp 00000000 08:02 2110779                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f00fe48f000-7f00fe68f000 ---p 001e7000 08:02 2110779                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f00fe68f000-7f00fe693000 r--p 001e7000 08:02 2110779                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f00fe693000-7f00fe695000 rw-p 001eb000 08:02 2110779                    /lib/x86_64-linux-gnu/libc-2.27.so
+7f00fe695000-7f00fe699000 rw-p 00000000 00:00 0 
+7f00fe699000-7f00fe69c000 r-xp 00000000 08:02 2110782                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f00fe69c000-7f00fe89b000 ---p 00003000 08:02 2110782                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f00fe89b000-7f00fe89c000 r--p 00002000 08:02 2110782                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f00fe89c000-7f00fe89d000 rw-p 00003000 08:02 2110782                    /lib/x86_64-linux-gnu/libdl-2.27.so
+7f00fe89d000-7f00fe8ac000 r-xp 00000000 08:02 2520994                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/jli/libjli.so
+7f00fe8ac000-7f00feaab000 ---p 0000f000 08:02 2520994                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/jli/libjli.so
+7f00feaab000-7f00feaac000 r--p 0000e000 08:02 2520994                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/jli/libjli.so
+7f00feaac000-7f00feaad000 rw-p 0000f000 08:02 2520994                    /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/jbr/lib/jli/libjli.so
+7f00feaad000-7f00feac7000 r-xp 00000000 08:02 2110794                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f00feac7000-7f00fecc6000 ---p 0001a000 08:02 2110794                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f00fecc6000-7f00fecc7000 r--p 00019000 08:02 2110794                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f00fecc7000-7f00fecc8000 rw-p 0001a000 08:02 2110794                    /lib/x86_64-linux-gnu/libpthread-2.27.so
+7f00fecc8000-7f00feccc000 rw-p 00000000 00:00 0 
+7f00feccc000-7f00fece8000 r-xp 00000000 08:02 2102894                    /lib/x86_64-linux-gnu/libz.so.1.2.11
+7f00fece8000-7f00feee7000 ---p 0001c000 08:02 2102894                    /lib/x86_64-linux-gnu/libz.so.1.2.11
+7f00feee7000-7f00feee8000 r--p 0001b000 08:02 2102894                    /lib/x86_64-linux-gnu/libz.so.1.2.11
+7f00feee8000-7f00feee9000 rw-p 0001c000 08:02 2102894                    /lib/x86_64-linux-gnu/libz.so.1.2.11
+7f00feee9000-7f00fef10000 r-xp 00000000 08:02 2110774                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f00fefa3000-7f00fefe5000 rw-p 00000000 00:00 0 
+7f00fefe5000-7f00fefe9000 ---p 00000000 00:00 0 
+7f00fefe9000-7f00ff0e8000 rw-p 00000000 00:00 0 
+7f00ff0f8000-7f00ff0fd000 rw-p 00000000 00:00 0 
+7f00ff0fd000-7f00ff104000 ---p 00000000 00:00 0 
+7f00ff104000-7f00ff10c000 rw-s 00000000 08:02 2627527                    /tmp/hsperfdata_alex/26908
+7f00ff10c000-7f00ff10d000 ---p 00000000 00:00 0 
+7f00ff10d000-7f00ff10e000 r--p 00000000 00:00 0 
+7f00ff10e000-7f00ff110000 rw-p 00000000 00:00 0 
+7f00ff110000-7f00ff111000 r--p 00027000 08:02 2110774                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f00ff111000-7f00ff112000 rw-p 00028000 08:02 2110774                    /lib/x86_64-linux-gnu/ld-2.27.so
+7f00ff112000-7f00ff113000 rw-p 00000000 00:00 0 
+7ffd5d0b8000-7ffd5d0d9000 rw-p 00000000 00:00 0                          [stack]
+7ffd5d0e8000-7ffd5d0eb000 r--p 00000000 00:00 0                          [vvar]
+7ffd5d0eb000-7ffd5d0ed000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+
+VM Arguments:
+java_command: org.jetbrains.git4idea.http.GitAskPassApp Username for 'https://github.com': 
+java_class_path (initial): /home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/plugins/git4idea/lib/git4idea-rt.jar:/home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/lib/xmlrpc-2.0.1.jar:/home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/lib/commons-codec-1.14.jar:/home/alex/Desktop/projects/idea/ideaIU-2020.1.2/idea-IU-201.7846.76/lib/util.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 3                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 1                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 4                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 130023424                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 2069889024                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5830732                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122913754                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122913754                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=/usr/lib/git-core:/home/alex/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+USERNAME=alex
+SHELL=/bin/bash
+DISPLAY=:0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0xd67370], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGBUS: [libjvm.so+0xd67370], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGFPE: [libjvm.so+0xd67370], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGPIPE: [libjvm.so+0xb6b340], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGXFSZ: [libjvm.so+0xb6b340], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGILL: [libjvm.so+0xd67370], sa_mask[0]=11111111011111111101111111111110, sa_flags=SA_RESTART|SA_SIGINFO
+SIGUSR2: [libjvm.so+0xb6b1d0], sa_mask[0]=00100000000000000000000000000000, sa_flags=SA_RESTART|SA_SIGINFO
+SIGHUP: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGINT: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGTERM: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+SIGQUIT: SIG_DFL, sa_mask[0]=00000000000000000000000000000000, sa_flags=none
+
+
+---------------  S Y S T E M  ---------------
+
+OS:DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.4 LTS"
+uname:Linux 4.15.0-112-generic #113-Ubuntu SMP Thu Jul 9 23:41:39 UTC 2020 x86_64
+OS uptime: 2 days 11:37 hours
+libc:glibc 2.27 NPTL 2.27 
+rlimit: STACK 8192k, CORE 0k, NPROC 30550, NOFILE 1048576, AS infinity, CPU infinity, DATA infinity, FSIZE infinity
+load average:2.49 1.95 1.68
+
+/proc/meminfo:
+MemTotal:        8081496 kB
+MemFree:          105544 kB
+MemAvailable:      27720 kB
+Buffers:             644 kB
+Cached:          1406132 kB
+SwapCached:         1468 kB
+Active:          6669080 kB
+Inactive:         857980 kB
+Active(anon):    6645976 kB
+Inactive(anon):   830668 kB
+Active(file):      23104 kB
+Inactive(file):    27312 kB
+Unevictable:         144 kB
+Mlocked:             144 kB
+SwapTotal:       2097148 kB
+SwapFree:              8 kB
+Dirty:                64 kB
+Writeback:             0 kB
+AnonPages:       6120720 kB
+Mapped:           683524 kB
+Shmem:           1355664 kB
+Slab:             168688 kB
+SReclaimable:      71496 kB
+SUnreclaim:        97192 kB
+KernelStack:       27184 kB
+PageTables:       145652 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     6137896 kB
+Committed_AS:   28376584 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:           0 kB
+VmallocChunk:          0 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+CmaTotal:              0 kB
+CmaFree:               0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:      972608 kB
+DirectMap2M:     7329792 kB
+DirectMap1G:     1048576 kB
+
+
+/proc/sys/kernel/threads-max (system-wide limit on the number of threads):
+61101
+
+
+/proc/sys/vm/max_map_count (maximum number of memory map areas a process may have):
+65530
+
+
+/proc/sys/kernel/pid_max (system-wide limit on number of process identifiers):
+32768
+
+
+
+container (cgroup) information:
+container_type: cgroupv1
+cpu_cpuset_cpus: 0-3
+cpu_memory_nodes: 0
+active_processor_count: 4
+cpu_quota: -1
+cpu_period: 100000
+cpu_shares: -1
+memory_limit_in_bytes: -1
+memory_and_swap_limit_in_bytes: -2
+memory_soft_limit_in_bytes: -1
+memory_usage_in_bytes: 7709212672
+memory_max_usage_in_bytes: 82337792
+
+Steal ticks since vm start: 0
+Steal ticks percentage since vm start:  0.000
+
+CPU:total 4 (initial active 4) (2 cores per cpu, 2 threads per core) family 6 model 61 stepping 4, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx, fma
+CPU Model and flags from /proc/cpuinfo:
+model name	: Intel(R) Core(TM) i5-5200U CPU @ 2.20GHz
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx est tm2 ssse3 sdbg fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb invpcid_single pti ssbd ibrs ibpb stibp tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid rdseed adx smap intel_pt xsaveopt dtherm ida arat pln pts md_clear flush_l1d
+
+Memory: 4k page, physical 8081496k(105544k free), swap 2097148k(16k free)
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.7+10-b765.53) for linux-amd64 JRE (11.0.7+10-b765.53), built on May 12 2020 01:45:33 by "" with gcc 8.3.1 20190311 (Red Hat 8.3.1-3)
+
+END.

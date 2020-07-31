@@ -76,11 +76,15 @@ public class ProfileController {
     void setRating(HttpServletRequest req,
                    HttpServletResponse resp,
                    HttpSession ses,
-                   @RequestParam int post_id,
-                   @RequestParam int rating) {
+                   @RequestParam String post_id,
+                   @RequestParam String rating) {
+        int rating_ = Integer.parseInt(rating);
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager) sc.getAttribute("db");
-        db.setReview(((String) ses.getAttribute("user")), post_id, rating);
+        if (rating_ > 5 || rating_ < 0){
+            return ;
+        }
+        db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
     }
 
     @RequestMapping(value = "/cbChanged", method = RequestMethod.POST)

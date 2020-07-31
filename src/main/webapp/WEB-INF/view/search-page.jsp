@@ -6,7 +6,7 @@
 <jsp:include page="head.jsp" />
 
 <body>
-    <jsp:include page="header-w-search.jsp" />
+    <jsp:include page="header.jsp" />
     <main>
         <div class="profiles">
             <c:forEach var="profile" items="${profiles}">

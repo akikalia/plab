@@ -35,7 +35,7 @@ CREATE TABLE reviews (
                          review_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
                          reviewer_name CHAR(64) NOT NULL,
                          post_id INT NOT NULL,
-                         rating INT NOT NULL
+                         rating DOUBLE NOT NULL
 );
 
 INSERT INTO users VALUES

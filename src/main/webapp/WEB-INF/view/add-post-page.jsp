@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<jsp:include page="header-w-search.jsp"/>
+<jsp:include page="header.jsp"/>
 <main>
     <form class="add-post" action="addpost" method="post" enctype="multipart/form-data">
         <label for="post-img">Upload A Picture:</label>
