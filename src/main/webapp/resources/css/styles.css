@@ -38,11 +38,18 @@ nav a {
 }
 
 
-#search-form {
+#search-form * {
     text-align: center;
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+.search  {
+    position:absolute;
+    margin-top: 25px;
+    margin-left: 45%;
+    margin-right: 50%;
 }
 
 /*
@@ -143,7 +150,7 @@ footer {
     padding: 10px;
 }
 
-.profile * ,.post *:not(.star ) {
+.profile * ,.post *:not(.star ){
     text-align: center;
     display: block;
     margin-left: auto;
