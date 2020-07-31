@@ -68,8 +68,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name(user_name);
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                double temp = ((BigDecimal) rs.getObject("post_rating")).doubleValue();
-                p.setPost_rating(rs.getObject("post_rating") == null ? 0 : temp);
+                BigDecimal temp = ((BigDecimal) rs.getObject("post_rating"));
+                p.setPost_rating(temp == null ? 0 : temp.doubleValue());
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -94,8 +94,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name((String) rs.getObject("owner_name"));
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                double temp = ((BigDecimal) rs.getObject("post_rating")).doubleValue();
-                p.setPost_rating(rs.getObject("post_rating") == null ? 0 : temp);
+                BigDecimal temp = ((BigDecimal) rs.getObject("post_rating"));
+                p.setPost_rating(temp == null ? 0 : temp.doubleValue());
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
