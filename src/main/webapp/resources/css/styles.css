@@ -143,7 +143,7 @@ footer {
     padding: 10px;
 }
 
-.profile *, .post *:not(.star ) {
+.profile * ,.post *:not(.star ) {
     text-align: center;
     display: block;
     margin-left: auto;
@@ -151,8 +151,17 @@ footer {
 
 }
 
+.auth *{
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
 
-.post, .profile_pic_a {
+}
+
+
+.post, .profile_pic_a, .auth {
     margin: auto;
     width: 400px;
     border: 5px #2c3841;
@@ -178,7 +187,7 @@ main button {
     padding: 10px;
 }
 
-.post {
+.post , .auth{
     background: rgba(133, 145, 175, 0.08);
     margin-bottom: 50px;
 }
