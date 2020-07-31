@@ -2,7 +2,10 @@
 body {
     background: white;
 }
-
+main {
+    min-height: 100%;
+    position: relative;
+}
 nav {
     float: right;
 }
@@ -125,6 +128,7 @@ footer {
     bottom: 0;
     width: 100%;
 }
+
 
 /*post styling*/
 
