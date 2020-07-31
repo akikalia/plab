@@ -59,9 +59,10 @@
                     <a class="profile_pic_a" href="/profile?u=${post.getOwner_name()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${post.getOwner_name()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
                     <label>${post.getOwner_name()}</label></br>
                     <img src="${pageContext.request.contextPath}/resources/userData/posts/${post.getPost_id()}.jpg" alt="post" class="post_img"></br>
-                    <form id="post-rating-formid=${post.getPost_id()}" class='star-rating-form'  method="POST">
+                    <form id="post-rating-formid=${post.getPost_id()}" class='star-rating-form' action="setRating" method="POST">
                         <input class='rating-input' type="hidden" name="rating" >
                         <input type="hidden" name="post_id" value="${post.getPost_id()}">
+                        <input type="hidden" name="page" value="/profile?u=${post.getOwner_name()}">
                         <div class="stars" onload="resetStars();" data-rating="${post.getPost_rating()}">
                             <img style="width:55px; height:auto;" val="1" class="star" src="${pageContext.request.contextPath}/resources/icons/empty_star.png">
                             <img style="width:55px; height:auto;" val="2" class="star" src="${pageContext.request.contextPath}/resources/icons/empty_star.png">

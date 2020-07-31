@@ -77,14 +77,16 @@ public class ProfileController {
                    HttpServletResponse resp,
                    HttpSession ses,
                    @RequestParam String post_id,
-                   @RequestParam String rating) {
+                   @RequestParam String rating) throws IOException {
         int rating_ = Integer.parseInt(rating);
         ServletContext sc = req.getServletContext();
         DBmanager db = (DBmanager) sc.getAttribute("db");
         if (rating_ > 5 || rating_ < 0){
+            resp.sendRedirect(req.getParameter("page"));
             return ;
         }
         db.setReview(((String) ses.getAttribute("user")), Integer.parseInt(post_id), rating_);
+        resp.sendRedirect(req.getParameter("page"));
     }
 
     @RequestMapping(value = "/cbChanged", method = RequestMethod.POST)
