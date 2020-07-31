@@ -68,8 +68,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name(user_name);
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                BigDecimal temp = ((BigDecimal) rs.getObject("post_rating"));
-                p.setPost_rating(temp == null ? 0 : temp.doubleValue());
+                Double temp = ((Double) rs.getObject("post_rating"));
+                p.setPost_rating(temp == null ? 0 : temp);
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -117,7 +117,7 @@ public class DBmanager {
             statement.setInt(2, post_id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return (int) rs.getObject("rating");
+                return ((Double) rs.getObject("rating")).intValue();
             }
         } catch (SQLException e) {
             e.printStackTrace();
