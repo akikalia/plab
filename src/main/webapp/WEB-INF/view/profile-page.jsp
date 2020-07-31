@@ -56,7 +56,7 @@
         <div class="posts">
             <c:forEach var="post" items="${profile.getPosts()}">
                 <div class="post">
-                    <a class="profile_pic_a" href="/profile?username=${post.getOwner_name()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${post.getOwner_name()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
+                    <a class="profile_pic_a" href="/profile?u=${post.getOwner_name()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${post.getOwner_name()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
                     <label>${post.getOwner_name()}</label></br>
                     <img src="${pageContext.request.contextPath}/resources/userData/posts/${post.getPost_id()}.jpg" alt="post" class="post_img"></br>
                     <form id="post-rating-form" method="post">
