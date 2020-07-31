@@ -50,7 +50,7 @@ nav a {
 
 .search  {
     position:absolute;
-    margin-top: 25px;
+    margin-top: 27px;
     margin-left: 45%;
     margin-right: 50%;
 }
@@ -60,7 +60,7 @@ nav a {
 Styling for searchbar textfield
  */
 input[name="q"] {
-    border-radius: 6px;
+    border-radius: 9px;
     border: inset #566991;
     background: white;
 }
@@ -124,12 +124,12 @@ label[for="follow-cb"]:active {
 
 .logo {
     float: left;
-    width: 120px;
+    width: 113px;
     height: auto;
 }
 
 .icon {
-    width: 40px;
+    width: 35px;
     height: auto;
 }
 

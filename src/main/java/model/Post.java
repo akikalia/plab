@@ -9,9 +9,9 @@ public class Post {
     private String owner_name;
     private String post_pic;
     private Timestamp date_added;
-    private BigDecimal post_rating;
+    private double post_rating;
 
-    public Post(int post_id, String owner_name, String post_pic, BigDecimal post_rating, Timestamp date_added){
+    public Post(int post_id, String owner_name, String post_pic, double post_rating, Timestamp date_added){
         this.date_added = date_added;
         this.post_pic = post_pic;
         this.owner_name = owner_name;
@@ -38,7 +38,7 @@ public class Post {
         return post_id;
     }
 
-    public BigDecimal getPost_rating() { return post_rating; }
+    public double getPost_rating() { return post_rating; }
 
     public void setDate_added(Timestamp date_added) {
         this.date_added = date_added;
@@ -56,5 +56,5 @@ public class Post {
         this.post_pic = post_pic;
     }
 
-    public void setPost_rating(BigDecimal post_rating) { this.post_rating = post_rating; }
+    public void setPost_rating(double post_rating) { this.post_rating = post_rating; }
 }

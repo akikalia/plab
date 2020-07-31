@@ -68,8 +68,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name(user_name);
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                BigDecimal temp = (BigDecimal) rs.getObject("post_rating");
-                p.setPost_rating(temp == null ? new BigDecimal(0) : temp);
+                double temp = ((BigDecimal) rs.getObject("post_rating")).doubleValue();
+                p.setPost_rating(rs.getObject("post_rating") == null ? 0 : temp);
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -94,8 +94,8 @@ public class DBmanager {
                 p.setPost_id((int) rs.getObject("post_id"));
                 p.setOwner_name((String) rs.getObject("owner_name"));
                 p.setDate_added((Timestamp) rs.getObject("date_added"));
-                BigDecimal temp = (BigDecimal) rs.getObject("post_rating");
-                p.setPost_rating(temp == null ? new BigDecimal(0) : temp);
+                double temp = ((BigDecimal) rs.getObject("post_rating")).doubleValue();
+                p.setPost_rating(rs.getObject("post_rating") == null ? 0 : temp);
                 p.setPost_pic((String) rs.getObject("post_pic"));
                 result.add(p);
             }
@@ -146,11 +146,25 @@ public class DBmanager {
         return false;
     }
 
+
+    public void removeConnection(String follower, String followee) {
+        Connection con = dbConnector.getConnection();
+        String q = "DELETE FROM connections WHERE follower_name = ? AND followee_name = ?;";
+        try {
+            PreparedStatement statement = con.prepareStatement(q);
+            statement.setString(1, follower);
+            statement.setString(2, followee);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     //Returns true if rated successfully
     //false if review already exists
     public boolean removeReview(String reviewer_name, int post_id) {
         Connection con = dbConnector.getConnection();
-        if (getReview(reviewer_name, post_id) == -1) {
+        if (getReview(reviewer_name, post_id) != -1) {
             String update = "DELETE FROM reviews WHERE ? = reviewer_name and post_id = ?;";
             try {
                 PreparedStatement stmt = con.prepareStatement(update);
@@ -200,19 +214,6 @@ public class DBmanager {
     public void addConnection(String follower, String followee) {
         Connection con = dbConnector.getConnection();
         String q = "INSERT INTO connections (follower_name, followee_name) VALUES (?, ?);";
-        try {
-            PreparedStatement statement = con.prepareStatement(q);
-            statement.setString(1, follower);
-            statement.setString(2, followee);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeConnection(String follower, String followee) {
-        Connection con = dbConnector.getConnection();
-        String q = "DELETE FROM connections WHERE follower_name = ? AND followee_name = ?;";
         try {
             PreparedStatement statement = con.prepareStatement(q);
             statement.setString(1, follower);
