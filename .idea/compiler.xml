@@ -9,5 +9,8 @@
         <module name="plab" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="plab" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

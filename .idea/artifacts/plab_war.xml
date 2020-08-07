@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="plab:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>plab</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="plab.war">
+      <element id="artifact" artifact-name="plab:war exploded" />
+    </root>
+  </artifact>
+</component>
