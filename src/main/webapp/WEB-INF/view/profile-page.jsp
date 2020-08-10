@@ -7,31 +7,30 @@
 
 <html>
 <jsp:include page="head.jsp" />
-
 <body>
     <jsp:include page="header.jsp" />
-    <br>
+    <main>
+        <%
+            String pr = ((Profile) request.getAttribute("profile")).getUsername();
+            String us = (String) session.getAttribute("user");
+            String flag = "";
+            if(pr.equals(us)) {
+                flag = "own_profile";
+            } else {
+                ServletContext sc = request.getServletContext();
+                DBmanager db = (DBmanager) sc.getAttribute("db");
+                Set<String> set = db.getFollowings(us);
+                if(set.contains(pr)) {
+                    flag = "yes";
+                } else {
+                    flag = "no";
+                }
+            }
+            request.setAttribute("flag", flag);
+        %>
         <div class="profile">
             <a class="profile_pic_a" href="/profile?u=${profile.getUsername()}"><img src="${pageContext.request.contextPath}/resources/userData/profilePics/${profile.getUsername()}.jpg" alt="profile_picture" class="profile_pic"></a></br>
             <label>username: ${profile.getUsername()}</label></br>
-            <%
-                String pr = ((Profile) request.getAttribute("profile")).getUsername();
-                String us = (String) session.getAttribute("user");
-                String flag = "";
-                if(pr.equals(us)) {
-                    flag = "own_profile";
-                } else {
-                    ServletContext sc = request.getServletContext();
-                    DBmanager db = (DBmanager) sc.getAttribute("db");
-                    Set<String> set = db.getFollowings(us);
-                    if(set.contains(pr)) {
-                        flag = "yes";
-                    } else {
-                        flag = "no";
-                    }
-                }
-                request.setAttribute("flag", flag);
-            %>
             <c:if test="${flag != 'own_profile'}">
                 <form action = "cbChanged" method = "post">
                     <input type="hidden" name="u" value=${profile.getUsername()}>
@@ -51,8 +50,12 @@
             <label>following: ${profile.getNumFollowing()}</label></br>
             <label>reviews: ${profile.getNumReviews()}</label></br>
             <label>rating: ${profile.getRating()}</label></br>
+            <c:if test="${flag == 'own_profile'}" >
+                <form method = get action = "addpost">
+                    <button type="submit">Add Post</button></br>
+                </form>
+            </c:if>
         </div>
-        </br>
         <div class="posts">
             <c:forEach var="post" items="${profile.getPosts()}">
                 <div class="post">
@@ -77,5 +80,4 @@
     </main>
     <jsp:include page="footer.jsp" />
 </body>
-
 </html>
